@@ -2,6 +2,7 @@ const request = require('request');
 const env = require('./env');
 const yargs = require('yargs');
 
+const mapboxBaseUrl = 'https://api.mapbox.com';
 //object that stores the final parsed output
 const argv = yargs
     .options({
@@ -18,16 +19,21 @@ const argv = yargs
 
 const encodedAddress = encodeURIComponent(argv.a);
 
-//1st argument is the options body
-request({
-    url: 'http://www.mapquestapi.com/geocoding/v1/address?key='+env.getKey()+'&location='+encodedAddress,
-    json: true //to take a JSON string and convert it into an object
+const mapboxEndpoint = `${mapboxBaseUrl}/geocoding/v5/mapbox.places/${encodedAddress}.json/?access_token=${env.apiKeys.mapboxApiKey}&limit=3`;
+const darkskyEndpoint = `https://api.darksky.net/forecast/${env.apiKeys.darkskyApiKey}/45.4613528,-73.5744687?units=si&lang=fr`;
+
+request({url: mapboxEndpoint, json: true}, (error, response, body) => {
+    const latitude = body.features[0].center[1]
+    const longitude = body.features[0].center[0]
+    console.log(latitude, longitude);
+});
+
+request({ url: darkskyEndpoint, json: true //to take a JSON string and convert it into an object
 }, (error, response, body) => {
-    printJsonValue("City", body.results[0].locations[0].adminArea5);
-    printJsonValue("Latitude", body.results[0].locations[0].latLng.lat);
-    printJsonValue("Longitude", body.results[0].locations[0].latLng.lng);
+    console.log(`${body.daily.data[0].summary} Il est ${body.currently.temperature} C dehors. Il y a  
+    ${body.currently.precipProbability}% probabilité des averses.`);
 });
 
 let printJsonValue = (key, value) => {
-    console.log(`${key}: ${value}`);//last argument is for the number of indentations
+    console.log(`${key}: ${value}`);
 }
