@@ -23,14 +23,12 @@ geocode(encodedAddress, (error, data) => {
         console.log(error)
     } else if (data) {
         console.log(data.latitude, data.longitude)
+        forecast(data.latitude, data.longitude, (error, data) => {
+            if (error) {
+                console.log(error)
+            } else if (data) {
+                console.log(data);
+            }
+        })
     }
-
-    forecast(data.latitude, data.longitude, (error, data) => {
-        if (error) {
-            console.log(error)
-        } else if (data) {
-            console.log(data);
-        }
-    })
 })
-
