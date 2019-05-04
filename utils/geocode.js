@@ -14,9 +14,9 @@ const geocode = (address, callback) => {
         } else if (!body.features || !body.features.length) {
             callback("Aucun résultat pour votre requête, veuillez vérifier votre terme de recherche.", undefined)
         } else {
-            callback(undefined, {latitude: body.features[0].center[1], longitude: body.features[0].center[0]})
+            callback(undefined, { latitude: body.features[0].center[1], longitude: body.features[0].center[0] })
         }
-        
+
     });
 };
 

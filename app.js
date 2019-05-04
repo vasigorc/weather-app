@@ -24,12 +24,13 @@ geocode(encodedAddress, (error, data) => {
     } else if (data) {
         console.log(data.latitude, data.longitude)
     }
+
+    forecast(data.latitude, data.longitude, (error, data) => {
+        if (error) {
+            console.log(error)
+        } else if (data) {
+            console.log(data);
+        }
+    })
 })
 
-forecast(-75.7088, 44.1545, (error, data) => {
-    if (error) {
-        console.log(error)
-    } else if (data) {
-        console.log(data);
-    }
-})
