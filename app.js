@@ -20,15 +20,15 @@ const encodedAddress = encodeURIComponent(argv.a);
 
 geocode(encodedAddress, (error, data) => {
     if (error) {
-        console.log(error)
-    } else if (data) {
-        console.log(data.latitude, data.longitude)
-        forecast(data.latitude, data.longitude, (error, data) => {
-            if (error) {
-                console.log(error)
-            } else if (data) {
-                console.log(data);
-            }
-        })
+        return console.log(error)
     }
+
+    forecast(data.latitude, data.longitude, (error, forecastData) => {
+        if (error) {
+            return console.log(error)
+        }
+
+        console.log(`${data.location}\n
+        ${forecastData}`)
+    })
 })
