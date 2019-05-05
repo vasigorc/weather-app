@@ -23,12 +23,11 @@ geocode(encodedAddress, (error, data) => {
         return console.log(error)
     }
 
-    forecast(data.latitude, data.longitude, (error, forecastData) => {
+    forecast(data, (error, forecastData) => {
         if (error) {
             return console.log(error)
         }
 
-        console.log(`${data.location}\n
-        ${forecastData}`)
+        console.log(`${data.location}\n${forecastData}`)
     })
 })
