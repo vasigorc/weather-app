@@ -12,7 +12,7 @@ const geocode = (address, callback) => {
         if (error) {
             callback('Impossible de se connecter à Map Service', undefined)
         } else if (errorMessage) {
-            callback(`Erreur de recherche: ${body.message}`, undefined)
+            callback(`Erreur de recherche: ${errorMessage}`, undefined)
         } else if (!results || !results.length) {
             callback("Aucun résultat pour votre requête, veuillez vérifier votre terme de recherche.", undefined)
         } else {
